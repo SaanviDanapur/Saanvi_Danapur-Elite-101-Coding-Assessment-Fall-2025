@@ -75,23 +75,12 @@ library_books = [
     }
 ]
 
-
-def view_overdue_books():
-    current_date = datetime.now().date() #used ai to get datetime syntax
-    print(type(current_date))
-    print("The following book titles are overdue: ")
-    for i in library_books:
-        if i['due_date'] != None:
-            if i['due_date'] < str(current_date):
-                print(i['due_date'])
-    
-
 class Book:
-    def __init__(self, library_books, user_input):
-        self.book_info = library_books
-        self.user_input = user_input
+    def __init__(self, library_books, user_input):# established the use of the provided library books list of dictionaries
+        self.book_info = library_books# suggestion of converting a dicitonary to a variable was by chatgpt, however nothing else in the class(aside from date_time) used the platform
+        self.user_input = user_input#included to esablish the use of user input throughout the class
     
-    def view_books(self):
+    def view_books(self):# used self(in this andthe rest of the functions) to tie the method/function back to the class
         for i in library_books:
             if i['available'] == True:
                 book_id = i['id']
@@ -102,7 +91,7 @@ class Book:
                 print(f'Author: {book_author}')
                 print("-"*40)
 
-    def checkout(self, id):
+    def checkout(self, id):# id represents the id the user will input into the computer
         
         for i in self.book_info:
             if (i['id'] == id) and (i['available'] == True):
@@ -140,20 +129,21 @@ class Book:
         print(top_books)
 
     def view_overdue_books(self):
-        current_date = datetime.now().date() #used ai to get current date with datetime syntax        print("The following book titles are overdue: ")
-        
+        current_date = datetime.now().date() #used ai to get current date with datetime syntax        
+        print("The following book titles are overdue: ")
+        #print(type(current_date))
         for i in self.book_info:
-            if i['due_date'] != None:
-                if i['due_date'] < str(current_date):
-                    print(i['due_date'])
+            if i['due_date'] != None:# filtered out the titles w/o a due date
+                if i['due_date'] < str(current_date):#Converted current date from a datetime type(found using python type funtion to print it out) into string for an easy comparison
+                    print(i['title'])
                 
         
 
 
-def menuFunction():
+def menuFunction():# displays menu list for user to choose from
     library = Book(library_books, "")
     print("--Welcome to the Library application menu--\n1. View books\n2. View top three books\n3. View overdue books\n4. Checkout books\n5. Return books\n6. Exit")
-    user_selection = input(("--Please select from the following choices(1-6):"))
+    user_selection = input(("--Please select from the following choices(1-6):"))#Used string input to eliminate data type issues with intergers, booleans, etc.
     while user_selection !="6":
         if user_selection == "1":
             library.view_books()
@@ -167,7 +157,7 @@ def menuFunction():
         elif user_selection == "5":
             bookid_return = input("Enter the id of the book you want to checkout: ")
             library.return_book(bookid_return) 
-        user_selection = input(("--Welcome back to the menu--\n1. View books\n2. View top three books\n3. View overdue books\n4. Checkout books\n5. Return books\n6. Exit\nPlease select from the following choices(1-6):"))
+        user_selection = input(("\n--Welcome back to the menu--\n1. View books\n2. View top three books\n3. View overdue books\n4. Checkout books\n5. Return books\n6. Exit\nPlease select from the following choices(1-6):"))
     print("Thank you for using the Library system, have a great rest of your day.")
 
 
